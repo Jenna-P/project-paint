@@ -4,6 +4,7 @@ const fillColors = document.querySelectorAll(".fillColor");
 const paintColors = document.querySelectorAll(".paintColor");
 const range = document.getElementById("jsRange");
 const saveBtn = document.getElementById("jsSave");
+const resetBtn = document.getElementById("jsReset");
 
 canvas.width = 550;
 canvas.height = 550;
@@ -14,7 +15,7 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 //context default
 ctx.strokeStyle="#2c2c2c";
-ctx.fillStyle="#2c2c2c";
+ctx.fillStyle="white";
 ctx.lineWidth=2.5;
 
 let painting = false;
@@ -42,15 +43,6 @@ Array.from(paintColors).forEach(color =>
     })
 );
 
-// save painting as a image 
-saveBtn.addEventListener('click', () => {
-    const image = canvas.toDataURL();
-    const link = document.createElement('a'); 
-    link.href = image;
-    link.download = "myPaint[👩‍🎨]";
-    link.click();
-})
-
 const stopPainting = () => painting = false; 
 const startPainting = () => painting = true;
 
@@ -68,19 +60,6 @@ const onMouseMove = (event) => {
     }
 }
 
-//그림 그리기
-const handleColorClick = (event) => {
-    const color = event.target.style.backgroundColor;
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
-}
-
-//브러쉬 굵기
-const handleRangeChange = (event) => {
-    const rangeValue = event.target.value;
-    ctx.lineWidth = rangeValue;
-}
-
 if(canvas){
     //move mouse on canvas
     canvas.addEventListener("mousemove",onMouseMove);
@@ -90,10 +69,29 @@ if(canvas){
     canvas.addEventListener("mouseup",stopPainting);
     //pointer out og canvas
     canvas.addEventListener("mouseleave", stopPainting);
-    //우클릭 감지
+    //prevent right click
     canvas.addEventListener("contextmenu",handelCM);
 }
 
-// Array.from(colors).forEach(color => 
-//     color.addEventListener("click", handleColorClick)
-// );
+//thickness brush
+if(range){
+    range.addEventListener("input", (event) => {
+        const rangeValue = event.target.value;
+        ctx.lineWidth = rangeValue;
+    });
+}
+
+// save painting as a image 
+saveBtn.addEventListener('click', () => {
+    const image = canvas.toDataURL();
+    const link = document.createElement('a'); 
+    link.href = image;
+    link.download = "myPaint[👩‍🎨]";
+    link.click();
+});
+
+// reset canvas
+resetBtn.addEventListener('click', () => {
+    ctx.fillStyle="white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+});
