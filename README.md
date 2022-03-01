@@ -15,3 +15,5 @@ canvas Reference
 - fillRect()
 - toDataURL()
   ...
+
+[Demo!](https://jenna-p.github.io/project-paint/)

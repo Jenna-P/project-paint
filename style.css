@@ -71,9 +71,12 @@ body {
   background: none;
   font-size: 20px;
   text-transform: uppercase;
+  border: 1px solid gray;
   border-radius: 25px;
   margin-left: 20px;
+  padding: 10px;
   cursor: pointer;
+  color: gray;
 }
 
 .button-section button:hover {
